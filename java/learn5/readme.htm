@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://www.cnblogs.com/xuwenjin/p/8830850.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="Java&amp;#160;Persistence API定义了一种定义，可以将常规的普通Java对象（有时被称作POJO）映射到数据库。这些普通Java对象被称作Entity Bean。除了是用Java P">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JPA之@Entity、@Table、@Column、@Id - 仅此而已-远方 - 博客园</title>
+    
+    <link rel="stylesheet" href="./readme_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./readme_files/bundle-summergarden.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./readme_files/bundle-summergarden-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/xuwenjin/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/xuwenjin/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/xuwenjin/wlwmanifest.xml">
+    <script async="" src="./readme_files/analytics.js"></script><script type="text/javascript" src="./readme_files/encoder.js"></script><script src="./readme_files/jquery-2.2.0.min.js"></script>
+    <script src="./readme_files/blog-common.min.js"></script>
+    <script>
+        var currentBlogId = 413453;
+        var currentBlogApp = 'xuwenjin';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+    </script>
+    
+    
+    
+</head>
+<body>
+    <a name="top"></a>
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/xuwenjin/"><img id="blogLogo" src="./readme_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/xuwenjin/">仅此而已-远方</a>
+</h1>
+<h2>
+
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+
+			<ul id="navList">
+				<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+				<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/xuwenjin/">
+首页</a>
+</li>
+				<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+				<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E4%BB%85%E6%AD%A4%E8%80%8C%E5%B7%B2-%E8%BF%9C%E6%96%B9">
+联系</a></li>
+				<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+				<li>
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/xuwenjin/rss/">
+订阅</a>
+				
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/xuwenjin/rss/">
+    <img src="./readme_files/xml.gif" alt="订阅">
+</a></li>
+			</ul>
+
+
+
+		<div class="blogStats">
+			
+			<!--done-->
+随笔 - 
+82&nbsp;
+文章 - 
+0&nbsp;
+评论 - 
+20&nbsp;
+
+
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/xuwenjin/p/8830850.html">JPA之@Entity、@Table、@Column、@Id</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p align="left"><span style="font-size: 15px;">Java&nbsp;Persistence API定义了一种定义，可以将常规的普通Java对象（有时被称作POJO）映射到数据库。</span><br><span style="font-size: 15px;">这些普通Java对象被称作Entity Bean。</span><br><span style="font-size: 15px;">除了是用Java Persistence元数据将其映射到数据库外，Entity Bean与其他Java类没有任何区别。</span><br><span style="font-size: 15px;">事实上，创建一个Entity Bean对象相当于新建一条记录，删除一个Entity Bean会同时从数据库中删除对应记录，修改一个Entity Bean时，容器会自动将Entity Bean的状态和数据库同步。</span></p>
+<p align="left"><span style="font-size: 15px;">Java Persistence API还定义了一种查询语言（JPQL），具有与SQL相类似的特征，只不过做了裁减，以便处理Java对象而非原始的关系表。</span></p>
+<p align="left"><span style="color: #ff0000; font-size: 15px;">注意：在Hibernate中也有@Entity和Table这两个注解，但是其中@Entity注解已经废弃，所以本文只分析JPA下的注解</span></p>
+<p>
+
+<br><span style="font-size: 15px;">首先看看个例子：</span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./readme_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;">package com.xwj.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name </span>= <span style="color: #800000;">"</span><span style="color: #800000;">xwj_user</span><span style="color: #800000;">"</span>, schema = <span style="color: #800000;">"</span><span style="color: #800000;">test</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+</span><span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> UserEntity {
+
+    @Id
+    @GeneratedValue(generator </span>= <span style="color: #800000;">"</span><span style="color: #800000;">system-uuid</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    @GenericGenerator(name </span>= <span style="color: #800000;">"</span><span style="color: #800000;">system-uuid</span><span style="color: #800000;">"</span>, strategy = <span style="color: #800000;">"</span><span style="color: #800000;">uuid</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    @Column(name </span>= <span style="color: #800000;">"</span><span style="color: #800000;">ID</span><span style="color: #800000;">"</span>, unique = <span style="color: #0000ff;">true</span>, nullable = <span style="color: #0000ff;">false</span>, length = <span style="color: #800080;">32</span><span style="color: #000000;">)
+    </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> Integer id;
+
+    @Column(name </span>= <span style="color: #800000;">"</span><span style="color: #800000;">last_name</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> String lastName;
+
+    @Column(name </span>= <span style="color: #800000;">"</span><span style="color: #800000;">email</span><span style="color: #800000;">"</span>, length = <span style="color: #800080;">32</span><span style="color: #000000;">)
+    </span><span style="color: #0000ff;">private</span><span style="color: #000000;"> String email;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">TODO get和set方法略...</span>
+<span style="color: #000000;">    
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./readme_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 15px;">解释：</span></p>
+<p>　　<span style="font-family: Arial, Verdana, sans-serif; font-size: 13.3333px;"><span style="font-size: 15px;"><strong><span style="color: #000000;">@Entity</span></strong> 表明该类 (<span style="color: #000000;">UserEntity</span>) 为一个实体类，<span style="font-family: Arial, Verdana, sans-serif;">它默认对应数据库中的表名是user_entity。这里也可以写成</span></span></span></p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">　　　　　　@Entity(name = "xwj_user")</span></span></p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">　　　　　　或者</span></span></p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">　　　　　　@Entity<br>　　　　　　@Table(name = "xwj_user", schema = "test")</span></span></p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">　　　　　　查看@Entity注解，发现其只有一个属性name，表示其所对应的数据库中的表名</span></span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">　　<strong>@Table </strong><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">当实体类与其映射的数据库表名不同名时需要使用 @Table<span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;"><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">注解</span></span></span></span>说明，该标注与 @Entity <span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;"><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">注解</span></span></span></span>并列使用，置于实体类声明语句之前，可写于单独语　　　　　　　　　　句行，也可与声明语句同行。 <br>
+　　　　　　@Table注解的常用选项是 name，用于指明数据库的表名 <br>
+　　　　　　@Table<span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;"><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">注解</span></span></span></span>还有两个选项 catalog 和 schema 用于设置表所属的数据库目录或模式，通常为数据库名</span></span><strong><br></strong></span></span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;"><span style="font-family: Arial, Verdana, sans-serif; font-size: 15px;"><span style="font-family: Arial, Verdana, sans-serif;">如果缺省@Table注解，则class字段名即表中的字段名，所以需要@Column注解来改变class中字段名与db中表的字段名的映射规则</span></span></span></span></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./readme_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 14px;"><span style="color: #000000;">@Column注释定义了将成员属性映射到关系表中的哪一列和该列的结构信息，属性如下：
+　　</span><span style="color: #800080;">1</span><span style="color: #000000;">）name：映射的列名。如：映射tbl_user表的name列，可以在name属性的上面或getName方法上面加入；
+　　</span><span style="color: #800080;">2</span><span style="color: #000000;">）unique：是否唯一；
+　　</span><span style="color: #800080;">3</span><span style="color: #000000;">）nullable：是否允许为空；
+　　</span><span style="color: #800080;">4</span><span style="color: #000000;">）length：对于字符型列，length属性指定列的最大字符长度；
+　　</span><span style="color: #800080;">5</span><span style="color: #000000;">）insertable：是否允许插入；
+　　</span><span style="color: #800080;">6</span><span style="color: #000000;">）updatetable：是否允许更新；
+　　</span><span style="color: #800080;">7</span><span style="color: #000000;">）columnDefinition：定义建表时创建此列的DDL；
+　　</span><span style="color: #800080;">8</span><span style="color: #000000;">）secondaryTable：从表名。如果此列不建在主表上（默认是主表），该属性定义该列所在从表的名字<br><br></span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./readme_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>　　</p>
+<p>如果是主键id，还会用到@Id注解</p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 14px;"><span style="color: #000000;">@Id注释指定表的主键，它可以有多种生成方式：
+　　</span><span style="color: #800080;">1</span><span style="color: #000000;">）TABLE：容器指定用底层的数据表确保唯一；
+　　</span><span style="color: #800080;">2</span><span style="color: #000000;">）SEQUENCE：使用数据库德SEQUENCE列莱保证唯一（Oracle数据库通过序列来生成唯一ID）；
+　　</span><span style="color: #800080;">3</span><span style="color: #000000;">）IDENTITY：使用数据库的IDENTITY列莱保证唯一；
+　　</span><span style="color: #800080;">4</span><span style="color: #000000;">）AUTO：由容器挑选一个合适的方式来保证唯一；
+　　</span><span style="color: #800080;">5</span>）NONE：容器不负责主键的生成，由程序来完成。</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>其中与@Id一起使用的还有另外两个注解：@GeneratedValue、@GenericGenerator，具体使用方法可参考<span class="link_title"><a href="https://blog.csdn.net/u011781521/article/details/72210980">hibernate中的@GeneratedValue与@GenericGenerator</a></span></p>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature" style="display: block;">知识改变世界</div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/xuwenjin/category/1198833.html" target="_blank">JPA</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(8830850,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;4368f690-5e02-e411-8d02-90b11c0b17d6&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./readme_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./readme_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/xuwenjin/">仅此而已-远方</a><br>
+            <a href="https://home.cnblogs.com/u/xuwenjin/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/xuwenjin/followers/">粉丝 - 28</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;4368f690-5e02-e411-8d02-90b11c0b17d6&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(8830850,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">3</span>
+    </div>
+    <div class="buryit" onclick="votePost(8830850,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/xuwenjin/p/8822820.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/xuwenjin/p/8822820.html" title="发布于 2018-04-13 18:55">@EnableAutoConfiguration和@SpringbootApplication注解</a>
+    <br>
+    <a href="https://www.cnblogs.com/xuwenjin/p/8831129.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/xuwenjin/p/8831129.html" title="发布于 2018-04-14 14:53">JPA之@OneToMany、@ManyToOne、@JoinColumn</a>
+
+</div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2018-04-14 11:01</span>&nbsp;
+<a href="https://www.cnblogs.com/xuwenjin/">仅此而已-远方</a>&nbsp;
+阅读(<span id="post_view_count">26880</span>)&nbsp;
+评论(<span id="post_comment_count">3</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=8830850" rel="nofollow">
+    编辑
+</a>
+<a href="javascript:void(0)" onclick="AddToWz(8830850);return false;">收藏</a></div>
+	</div>
+	
+	
+</div>
+<script src="./readme_files/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 413453, cb_blogApp = 'xuwenjin', cb_blogUserGuid = '4368f690-5e02-e411-8d02-90b11c0b17d6';
+    var cb_entryId = 8830850, cb_entryCreatedDate = '2018-04-14 11:01', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<!--done-->
+<br>
+<div class="feedback_area_title">
+    Post Comment</div>
+<div class="feedbackNoItems">
+    <div class="feedbackNoItems"></div></div>
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+                </div>
+                
+<a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4140078" class="layer">#1楼</a>
+<a name="4140078" id="comment_anchor_4140078"></a>
+
+
+<span class="comment_date">2018-12-16 14:15</span>
+
+
+                |
+                
+
+            <a id="a_comment_author_4140078" href="https://www.cnblogs.com/lunge-blog/" target="_blank">我的锅</a>
+
+            </div>
+            <div class="feedbackCon">
+                
+<div id="comment_body_4140078" class="blog_comment_body">
+    使用的时候会自动在数据库中建表吗？就是说数据库可以是空的，所有表和字段自动创建的吗？
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4140078, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4140078, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4140078_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1254945/20191004172451.png
+        </span>
+<br>
+            </div>
+        </div>
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+                </div>
+                
+<a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4271589" class="layer">#2楼</a>
+<a name="4271589" id="comment_anchor_4271589"></a>
+
+
+<span class="comment_date">2019-06-02 23:24</span>
+
+
+                |
+                
+
+            <a id="a_comment_author_4271589" href="https://home.cnblogs.com/u/1447424/" target="_blank">messi-lp</a>
+
+            </div>
+            <div class="feedbackCon">
+                
+<div id="comment_body_4271589" class="blog_comment_body">
+    <a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4140078" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4140078);">@</a>
+我的锅<br>`spring.datasource.url=jdbc:mysql://localhost:3306/test`<br>这句<br>连接数据库的配置文件中指明了数据库为什么，比如这个就是名为test的数据库
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4271589, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4271589, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+<br>
+            </div>
+        </div>
+        <div class="feedbackItem">
+            <div class="feedbackListSubtitle">
+                <div class="feedbackManage">
+                    
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+                </div>
+                
+<a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4323348" class="layer">#3楼</a>
+<a name="4323348" id="comment_anchor_4323348"></a>
+
+        <span id="comment-maxId" style="display:none">4323348</span>
+        <span id="comment-maxDate" style="display:none">2019/8/12 上午10:32:44</span>
+
+<span class="comment_date">2019-08-12 10:32</span>
+
+
+                |
+                
+
+            <a id="a_comment_author_4323348" href="https://home.cnblogs.com/u/1660228/" target="_blank">伪墨</a>
+
+            </div>
+            <div class="feedbackCon">
+                
+<div id="comment_body_4323348" class="blog_comment_body">
+    <a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4140078" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4140078);">@</a>
+我的锅<br>默认是不会建表的，需要在Application文件中配置（有表就更新，无表就创建）<br>spring.jpa.hibernate.ddl-auto=update
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4323348, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4323348, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+<br>
+            </div>
+        </div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br><a href="https://www.jdcloud.com/cn/activity/year-end?utm_source=DMT_cnblogs&amp;utm_medium=CH&amp;utm_campaign=q4vm&amp;utm_term=Virtual-Machines" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-京东云&#39;)">【活动】京东云服务器_云主机低于1折，低价高性能产品备战双11</a><br><a href="https://www.qiniu.com/events/20191111?utm_campaign=2019_1111&amp;utm_content=cnblogs_1111&amp;utm_medium=banner&amp;utm_source=cnblogs&amp;utm_term=cnblogs_1111" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-七牛云&#39;)">【优惠】七牛云采购嘉年华，云存储、CDN等云产品低至1折</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./readme_files/gpt.js"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;"></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        </div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/651448/" target="_blank">扎克伯格夫妇接受访谈：每周都有约会之夜 约会不谈工作</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/651447/" target="_blank">NASA 将向空间站送去“机器人旅馆”</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/651446/" target="_blank">讯飞输入法新增密语模式：发送一串乱码，接收者可解码</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/651445/" target="_blank">盘点谷歌两创始人最昂贵"玩具" 飞机游艇豪宅啥都不缺</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/651444/" target="_blank">任正非：计划将华为美国研发中心迁往加拿大</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/xuwenjin/">
+            仅此而已-远方
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/xuwenjin/" title="入园时间：2014-07-03">
+            5年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/xuwenjin/followers/">
+            28
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/xuwenjin/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;4368f690-5e02-e411-8d02-90b11c0b17d6&#39;)">+加关注</a></div>
+        <script>getFollowStatus('4368f690-5e02-e411-8d02-90b11c0b17d6');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+			<div id="calendar"><div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/11/05&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年12月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2020/01/05&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                        <td class="CalWeekendDay" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            <a href="https://www.cnblogs.com/xuwenjin/archive/2019/12/03.html"><u>3</u></a>
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                        <td class="CalTodayDay" align="center">
+                            5
+                        </td>
+                        <td class="" align="center">
+                            6
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        7
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            8
+                        </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            14
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            15
+                        </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            21
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            22
+                        </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            28
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            29
+                        </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            4
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                9
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                10
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            11
+                        </td>
+                </tr>
+    </tbody>
+</table></div></div>                
+                    <script>loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    <!--
+<div class="catListLink">
+<h3 class ="catListTitle"><partial name="./Shared/_ltTitle.cshtml"></partial></h3>
+<ul>
+		<li>
+
+<a href="https://www.cnblogs.com/xuwenjin/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/xuwenjin/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/xuwenjin/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/xuwenjin/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+		<li>
+
+<a href="https://www.cnblogs.com/xuwenjin/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+
+<li><a id="itemListLink" onclick="this.blur();WarpClass('itemListLink', 'itemListLin_con');return false;" href="#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+-->
+
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+<div class="catListPostCategory">
+<h3 class="catListTitle">
+
+随笔分类
+
+
+</h3>
+
+
+<ul>
+
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1179151.html" rel="" target="">
+    ActiveMq(5)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1215764.html" rel="" target="">
+    docker(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1197427.html" rel="" target="">
+    elasticsearch(6)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1197425.html" rel="" target="">
+    freemarker(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1179147.html" rel="" target="">
+    Git(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1179150.html" rel="" target="">
+    java基础(15)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1216967.html" rel="" target="">
+    Java内存(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1198833.html" rel="" target="">
+    JPA(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1199532.html" rel="" target="">
+    mybatis(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1203076.html" rel="" target="">
+    mysql(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1207959.html" rel="" target="">
+    RabbitMq(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1202174.html" rel="" target="">
+    redis(3)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1201483.html" rel="" target="">
+    spring(5)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1290591.html" rel="" target="">
+    Spring Security(7)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1198478.html" rel="" target="">
+    springboot(9)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1259292.html" rel="" target="">
+    springcloud(7)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/category/1411666.html" rel="" target="">
+    前端(2)
+</a>
+ 
+</li>
+
+</ul>
+
+
+</div>
+<div class="catListPostArchive">
+<h3 class="catListTitle">
+
+随笔档案
+
+
+</h3>
+
+
+<ul>
+
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/12.html" rel="" target="">
+    2019年12月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/10.html" rel="" target="">
+    2019年10月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/08.html" rel="" target="">
+    2019年8月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/07.html" rel="" target="">
+    2019年7月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/05.html" rel="" target="">
+    2019年5月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/04.html" rel="" target="">
+    2019年4月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/03.html" rel="" target="">
+    2019年3月(4)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/02.html" rel="" target="">
+    2019年2月(2)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2019/01.html" rel="" target="">
+    2019年1月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/11.html" rel="" target="">
+    2018年11月(1)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/10.html" rel="" target="">
+    2018年10月(4)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/09.html" rel="" target="">
+    2018年9月(7)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/07.html" rel="" target="">
+    2018年7月(5)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/05.html" rel="" target="">
+    2018年5月(12)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/04.html" rel="" target="">
+    2018年4月(30)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/03.html" rel="" target="">
+    2018年3月(5)
+</a>
+ 
+</li>
+<li>
+<a href="https://www.cnblogs.com/xuwenjin/archive/2018/02.html" rel="" target="">
+    2018年2月(1)
+</a>
+ 
+</li>
+
+</ul>
+
+
+</div>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">Recent Comments</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/xuwenjin/p/8989043.html#4447784">1. Re:logstash-input-jdbc同时同步多个表</a></li>
+                    <li class="recent_comment_body">直观，非常直观，没有废话，就喜欢你这样的，直接贴代码 ㄟ(⊙ω⊙ㄟ)哈</li>
+                    <li class="recent_comment_author">--极客公园</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/xuwenjin/p/8573603.html#4433091">2. Re:Git客户端(TortoiseGit)基本使用详解</a></li>
+                    <li class="recent_comment_body">@ LinVan这就是你说的海龟啊...</li>
+                    <li class="recent_comment_author">--Jackets</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/xuwenjin/p/8970481.html#4377821">3. Re:rabbitmq-channel方法介绍</a></li>
+                    <li class="recent_comment_body">博主，假如没有这条channel.basicQos(1);限制，一个消费者每一次默认消费多少条数据？</li>
+                    <li class="recent_comment_author">--行走的老熊</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/xuwenjin/p/8830850.html#4323348">4. Re:JPA之@Entity、@Table、@Column、@Id</a></li>
+                    <li class="recent_comment_body">@ 我的锅默认是不会建表的，需要在Application文件中配置（有表就更新，无表就创建）spring.jpa.hibernate.ddl-auto=update...</li>
+                    <li class="recent_comment_author">--伪墨</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/xuwenjin/p/10681187.html#4299426">5. Re:Spring Integration实现分布式锁</a></li>
+                    <li class="recent_comment_body">Redisson 不是也能实现分布式锁吗  跟Spring Integration对比  两者有什么区别和优劣吗</li>
+                    <li class="recent_comment_author">--zenghuayo</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">Top Posts</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8573603.html">
+                            1. Git客户端(TortoiseGit)基本使用详解(139353)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8976696.html">
+                            2. ObjectMapper使用(58407)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8792919.html">
+                            3. elasticsearch-head的使用(43375)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8858050.html">
+                            4. springboot之异步调用@Async(34573)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8830850.html">
+                            5. JPA之@Entity、@Table、@Column、@Id(26880)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <!--
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8573603.html">
+                            1. Git客户端(TortoiseGit)基本使用详解(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8830850.html">
+                            2. JPA之@Entity、@Table、@Column、@Id(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8987546.html">
+                            3. logstash-jdbc-input与mysql数据库同步(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/8989043.html">
+                            4. logstash-input-jdbc同时同步多个表(2)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/xuwenjin/p/9540267.html">
+                            5. Spring Security基本配置(1)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+-->
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/xuwenjin/p/8573603.html">
+                                1. Git客户端(TortoiseGit)基本使用详解(11)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/xuwenjin/p/8792919.html">
+                                2. elasticsearch-head的使用(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/xuwenjin/p/8976696.html">
+                                3. ObjectMapper使用(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/xuwenjin/p/8830850.html">
+                                4. JPA之@Entity、@Table、@Column、@Id(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/xuwenjin/p/8822354.html">
+                                5. Spring JdbcTemplate详解(2)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2019 仅此而已-远方
+<br><span id="poweredby">Powered by .NET Core 3.0.1 on Linux</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+
+<div id="saladict-dictpanel-root" class="saladict-div saladict-panel"><div class="saladict-panel"></div></div><div id="download_plus_animation"></div></body></html>
