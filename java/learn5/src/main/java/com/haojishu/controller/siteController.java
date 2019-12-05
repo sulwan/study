@@ -7,6 +7,8 @@ import org.springframework.data.domain.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -57,11 +59,48 @@ public class siteController {
   }
 
   // 删除文章
-  @RequestMapping(value = "/update", method = RequestMethod.GET)
+  @RequestMapping(value = "/del", method = RequestMethod.GET)
   public String delArticle() {
     Article article1 = new Article();
     article1.setId(1L);
     articleRepository.delete(article1);
     return "delArticle";
+  }
+
+  // 一次保存多条文章
+  @RequestMapping(value = "/createAll")
+  public String createAll() {
+    Article article = new Article();
+    article.setAuthor("张三");
+    article.setTitle("张三标题");
+
+    Article article1 = new Article();
+    article1.setTitle("李四标题");
+    article1.setAuthor("李四");
+
+    List<Article> list = new ArrayList<Article>();
+
+    list.add(article);
+    list.add(article1);
+
+    articleRepository.saveAll(list);
+    return "createAll";
+  }
+
+  // 使用Sql进行查询
+  @RequestMapping(value = "/listsql")
+  public String listSql() {
+    Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Direction.DESC, "id"));
+    Page<Article> page = articleRepository.findByTitle("张三标题", pageable);
+
+    System.out.println(page.getNumber());
+    System.out.println(page.getNumberOfElements());
+    System.out.println(page.getSize());
+    System.out.println(page.getTotalElements());
+    System.out.println(page.getTotalPages());
+    System.out.println(page.isFirst());
+    System.out.println(page.isLast());
+    System.out.println(page.getContent());
+    return "listsql";
   }
 }
