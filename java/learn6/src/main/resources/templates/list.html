@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>列表</title>
+</head>
+<body>
+<h1>信息列表</h1>
+
+<div>
+    <nobr>
+        <a th:href="@{/add}">添加信息</a> |
+        <a th:href="@{/}">返回</a>
+    </nobr>
+</div>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>备注</th>
+            <th>手机号</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="contact : ${contacts}">
+            <td th:utext="${contact.id}">
+            <td><a th:href="@{/contacts/{contactId}(contactId=${contact.id})}" th:utext="${contact.username}">...</a>
+            </td>
+            <td><a th:href="@{/contacts/{contactId}(contactId=${contact.id})}" th:utext="${contact.email}">...</a></td>
+            <td th:utext="${contact.note}">...</td>
+            <td th:utext="${contact.mobile}">...</td>
+            <td><a th:href="@{/contacts/{contactId}/edit(contactId=${contact.id})}">Edit</a></td>
+        </tr>
+    </table>
+</div>
+<br/><br/>
+<div>
+    <nobr>
+        <span th:if="${hasPrev}"><a th:href="@{/list?page={prev}(prev=${prev})}">Prev</a>&nbsp;&nbsp;&nbsp;</span>
+        <span th:if="${hasNext}"><a th:href="@{/list?page={next}(next=${next})}">Next</a></span>
+    </nobr>
+</div>
+</body>
+</html>
