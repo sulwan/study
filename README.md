@@ -17,4 +17,6 @@ JAVA:
 
   7、SpringBoot演示aop的实际用处
 
- 8、SpringBoot整合Mybatis
+  8、SpringBoot整合Mybatis
+
+  9、SpringBoot整合MyBatis xml教程

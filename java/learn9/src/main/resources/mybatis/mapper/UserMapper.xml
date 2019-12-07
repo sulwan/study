@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haojishu.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.haojishu.entity.UserEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="baseSql">
+        id,username
+    </sql>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="baseSql"/>
+        from
+        user
+    </select>
+
+    <select id="getOne" parameterType="Long" resultMap="BaseResultMap">
+        select
+        <include refid="baseSql"/>
+        from user
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.haojishu.entity.UserEntity">
+        insert into user (username) values (#{username})
+    </insert>
+
+    <update id="update" parameterType="com.haojishu.entity.UserEntity">
+        update user set
+        <if test="username != null">username = #{username}</if>
+        where
+        id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        delete from user where id = #{id}
+    </delete>
+</mapper>
