@@ -24,3 +24,5 @@ JAVA:
 10、SpringBoot整合Mybatis-plus
 
 11、增加SpringBoot计划任务
+
+12、springBoot整合swagger2
