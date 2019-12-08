@@ -28,3 +28,5 @@ JAVA:
 12、springBoot整合swagger2
 
 13、SpringBoot整合Lombok
+
+14、SpringBoot整合开发热部署
