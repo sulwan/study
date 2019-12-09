@@ -32,3 +32,5 @@ JAVA:
 14、SpringBoot整合开发热部署
 
 15、SpringBoot整合MockMVC
+
+16、SpringBoot整合ActiveMQ

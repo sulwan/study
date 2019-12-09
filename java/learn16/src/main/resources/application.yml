@@ -1,0 +1,19 @@
+# ActiveMQ的其他配置属性：https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html 然后Ctrl+F搜索activemq和jms
+spring:
+  #默认情况下activemq提供的是queue模式，若要使用topic模式需要配置下面配置
+  jms:
+    pub-sub-domain: true
+  activemq:
+    broker-url: tcp://192.168.168.10:61616
+    in-memory: true
+    user: admin
+    password: admin
+    // 是否使用active连接池
+    pool:
+      enabled: false
+    use-exponential-back-off: true  # 是否在每次尝试重新发送失败后,增长这个等待时间
+    maximum-redeliveries: 10        # 重发次数,默认为6次   这里设置为10次
+    initial-redelivery-delay: 1     # 重发时间间隔,默认为1秒
+    back-off-multiplier: 2          # 第一次失败后重新发送之前等待500毫秒,第二次失败再等待500 * 2毫秒,这里的2就是value
+    use-collision-avoidance: false  # 是否避免消息碰撞
+    maximum-redelivery-delay: -1    # 设置重发最大拖延时间-1 表示没有拖延只有use-collision-avoidance(true)为true时生效
