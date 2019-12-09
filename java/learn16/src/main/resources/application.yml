@@ -1,6 +1,6 @@
-# ActiveMQµÄÆäËûÅäÖÃÊôĞÔ£ºhttps://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html È»ºóCtrl+FËÑË÷activemqºÍjms
+# ActiveMQçš„å…¶ä»–é…ç½®å±æ€§ï¼šhttps://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html ç„¶åCtrl+Fæœç´¢activemqå’Œjms
 spring:
-  #Ä¬ÈÏÇé¿öÏÂactivemqÌá¹©µÄÊÇqueueÄ£Ê½£¬ÈôÒªÊ¹ÓÃtopicÄ£Ê½ĞèÒªÅäÖÃÏÂÃæÅäÖÃ
+  #é»˜è®¤æƒ…å†µä¸‹activemqæä¾›çš„æ˜¯queueæ¨¡å¼ï¼Œè‹¥è¦ä½¿ç”¨topicæ¨¡å¼éœ€è¦é…ç½®ä¸‹é¢é…ç½®
   jms:
     pub-sub-domain: true
   activemq:
@@ -8,12 +8,16 @@ spring:
     in-memory: true
     user: admin
     password: admin
-    // ÊÇ·ñÊ¹ÓÃactiveÁ¬½Ó³Ø
+    # æ”¯æŒæ‰€æœ‰ç±»çš„ä¼ é€’
+    packages:
+      trust-all: true
+      #trusted: com.haojishu.entity
+    # æ˜¯å¦ä½¿ç”¨activeè¿æ¥æ± 
     pool:
       enabled: false
-    use-exponential-back-off: true  # ÊÇ·ñÔÚÃ¿´Î³¢ÊÔÖØĞÂ·¢ËÍÊ§°Üºó,Ôö³¤Õâ¸öµÈ´ıÊ±¼ä
-    maximum-redeliveries: 10        # ÖØ·¢´ÎÊı,Ä¬ÈÏÎª6´Î   ÕâÀïÉèÖÃÎª10´Î
-    initial-redelivery-delay: 1     # ÖØ·¢Ê±¼ä¼ä¸ô,Ä¬ÈÏÎª1Ãë
-    back-off-multiplier: 2          # µÚÒ»´ÎÊ§°ÜºóÖØĞÂ·¢ËÍÖ®Ç°µÈ´ı500ºÁÃë,µÚ¶ş´ÎÊ§°ÜÔÙµÈ´ı500 * 2ºÁÃë,ÕâÀïµÄ2¾ÍÊÇvalue
-    use-collision-avoidance: false  # ÊÇ·ñ±ÜÃâÏûÏ¢Åö×²
-    maximum-redelivery-delay: -1    # ÉèÖÃÖØ·¢×î´óÍÏÑÓÊ±¼ä-1 ±íÊ¾Ã»ÓĞÍÏÑÓÖ»ÓĞuse-collision-avoidance(true)ÎªtrueÊ±ÉúĞ§
+    use-exponential-back-off: true  # æ˜¯å¦åœ¨æ¯æ¬¡å°è¯•é‡æ–°å‘é€å¤±è´¥å,å¢é•¿è¿™ä¸ªç­‰å¾…æ—¶é—´
+    maximum-redeliveries: 10        # é‡å‘æ¬¡æ•°,é»˜è®¤ä¸º6æ¬¡   è¿™é‡Œè®¾ç½®ä¸º10æ¬¡
+    initial-redelivery-delay: 1     # é‡å‘æ—¶é—´é—´éš”,é»˜è®¤ä¸º1ç§’
+    back-off-multiplier: 2          # ç¬¬ä¸€æ¬¡å¤±è´¥åé‡æ–°å‘é€ä¹‹å‰ç­‰å¾…500æ¯«ç§’,ç¬¬äºŒæ¬¡å¤±è´¥å†ç­‰å¾…500 * 2æ¯«ç§’,è¿™é‡Œçš„2å°±æ˜¯value
+    use-collision-avoidance: false  # æ˜¯å¦é¿å…æ¶ˆæ¯ç¢°æ’
+    maximum-redelivery-delay: -1    # è®¾ç½®é‡å‘æœ€å¤§æ‹–å»¶æ—¶é—´-1 è¡¨ç¤ºæ²¡æœ‰æ‹–å»¶åªæœ‰use-collision-avoidance(true)ä¸ºtrueæ—¶ç”Ÿæ•ˆllision-avoidance(true)ä¸ºtrueæ—¶ç”Ÿæ•ˆ
