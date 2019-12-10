@@ -34,3 +34,5 @@ JAVA:
 15、SpringBoot整合MockMVC
 
 16、SpringBoot整合ActiveMQ
+
+17、SpringBoot整合RabbitMq
