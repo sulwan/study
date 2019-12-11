@@ -1,0 +1,5 @@
+zk:
+  url: 192.168.168.10:2181
+#　　url: 192.168.168.10:2181
+  localPath: /sulwan
+  timeout: 3000
