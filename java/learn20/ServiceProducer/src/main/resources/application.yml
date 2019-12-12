@@ -1,0 +1,12 @@
+server:
+  port: 8082
+dubbo:
+  application:
+    name: first-dubbo-provider
+  scan:
+    base-packages: Service
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://192.168.168.10:2181
