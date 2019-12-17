@@ -44,3 +44,5 @@ JAVA:
 20、SpringBoot整合Dubbo
 
 21、上边没有讲解zeekeeper是我的错，这里补上了！
+
+22、SpringBoot多数据源(这个属于综合案例了，他包含了切面，AbstractRoutingDataSource数据源切换类，排除SpringBoot自身数据源配置)
