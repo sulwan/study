@@ -50,3 +50,5 @@ JAVA:
 22、SpringBoot多数据源(这个属于综合案例了，他包含了切面，AbstractRoutingDataSource数据源切换类，排除SpringBoot自身数据源配置)
 
 23、SpringBoot与Ehcache的使用(需要配合第二章进行学习)
+
+24、Spring自带JSon解析
