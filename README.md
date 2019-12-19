@@ -56,3 +56,5 @@ JAVA:
 24、Spring自带JSon解析
 
 25、SpringBoot使用Aop记录日志
+
+26、SpringBoot自定义错误处理
