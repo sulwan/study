@@ -1,6 +1,7 @@
 package com.haojishu;
 
 import com.haojishu.abstractFactory.IProductFctory.BreedFactory;
+import com.haojishu.builder.GoodService;
 import com.haojishu.factory.NeedsFactory;
 import com.haojishu.prototype.Operation;
 import com.haojishu.singleton.SingletonTest;
@@ -30,5 +31,10 @@ public class main {
 
     System.out.println(Operation.getShop(1));
     System.out.println(Operation.getShop(1));
+
+    // 建造者模式
+    System.out.println("----------建造者模式----------");
+    new GoodService().Banana().showGoods();
+    System.out.println("商品总价格: " + new GoodService().Banana().getCost());
   }
 }
