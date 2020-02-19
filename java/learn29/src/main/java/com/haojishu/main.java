@@ -2,6 +2,7 @@ package com.haojishu;
 
 import com.haojishu.abstractFactory.IProductFctory.BreedFactory;
 import com.haojishu.factory.NeedsFactory;
+import com.haojishu.prototype.Operation;
 import com.haojishu.singleton.SingletonTest;
 
 public class main {
@@ -21,5 +22,13 @@ public class main {
     System.out.println(SingletonTest.getInstance());
     System.out.println(SingletonTest.getInstance());
 
+    // 原型模式
+    System.out.println("----------原型模式----------");
+    Operation.giveData();
+    System.out.println(Operation.getShop(1).getType());
+    System.out.println(Operation.getShop(2).getType());
+
+    System.out.println(Operation.getShop(1));
+    System.out.println(Operation.getShop(1));
   }
 }
